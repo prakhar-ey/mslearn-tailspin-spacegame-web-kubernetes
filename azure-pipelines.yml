@@ -14,7 +14,7 @@ stages:
   - job: 'Build'
     displayName: 'Build job'
     pool: 
-      vmImage: 'ubuntu-latest'
+      name: DE-AgentPool
     steps:
     - task: Docker@2
       displayName: 'Build and push the web image to container registry'
@@ -48,7 +48,7 @@ stages:
   - deployment: Deploy
     displayName: Deploy
     pool: 
-     name: Iac-Bakery-Ubuntu
+     name: DE-AgentPool
     environment: 'spike'
     variables:
     - group: Release
