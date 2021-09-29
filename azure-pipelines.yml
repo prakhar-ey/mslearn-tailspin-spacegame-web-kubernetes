@@ -59,14 +59,14 @@ stages:
           - download: current
             artifact: manifests
             
-          - task: KubernetesManifest@0
-            displayName: Create imagePullSecret
-            inputs:
-              action: createSecret
-              secretName: $(imagePullSecret)
-              dockerRegistryEndpoint: 'SC-ACR-GW10-BC-PoC'
-              kubernetesServiceConnection: 'SC-AKS-GW10-BC-PoC'
-              namespace: 'default'
+      #    - task: KubernetesManifest@0
+      #      displayName: Create imagePullSecret
+      #      inputs:
+      #        action: createSecret
+      #        secretName: $(imagePullSecret)
+      #        dockerRegistryEndpoint: 'SC-ACR-GW10-BC-PoC'
+      #        kubernetesServiceConnection: 'SC-AKS-GW10-BC-PoC'
+      #        namespace: 'default'
               
           - task: KubernetesManifest@0
             displayName: Deploy to Kubernetes cluster
@@ -77,8 +77,8 @@ stages:
               manifests: |
                 $(Pipeline.Workspace)/manifests/deployment.yml
                 $(Pipeline.Workspace)/manifests/service.yml
-              imagePullSecrets: |
-                $(imagePullSecret)
+       #       imagePullSecrets: |
+       #         $(imagePullSecret)
               containers: |
                 $(RegistryName)/$(webRepository):$(tag)
                 $(RegistryName)/$(leaderboardRepository):$(tag)
