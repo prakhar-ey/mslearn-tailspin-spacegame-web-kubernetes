@@ -14,7 +14,7 @@ stages:
   - job: 'Build'
     displayName: 'Build job'
     pool: 
-     name: DEFS Agent Pool
+     name: Iac-Bakery-Ubuntu
     steps:
     - task: Docker@2
       displayName: 'Build and push the web image to container registry'
@@ -48,7 +48,7 @@ stages:
   - deployment: Deploy
     displayName: Deploy
     pool: 
-     name: DEFS Agent Pool
+     name: Iac-Bakery-Ubuntu
     environment: 'spike'
     variables:
     - group: Release
