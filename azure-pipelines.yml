@@ -14,7 +14,7 @@ stages:
   - job: 'Build'
     displayName: 'Build job'
     pool: 
-     name: Iac-Bakery-Ubuntu
+      vmImage: 'ubuntu-latest'
     steps:
     - task: Docker@2
       displayName: 'Build and push the web image to container registry'
