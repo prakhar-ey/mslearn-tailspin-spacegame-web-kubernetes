@@ -1,0 +1,57 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: nginx-test
+  namespace: default
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: nginx-test
+  template:
+    metadata:
+      labels:
+        app: nginx-test
+    spec:
+      containers:
+        - name: nginx-test
+          image: 
+          ports:
+          - name: nginx-port
+            containerPort: 80
+---            
+ apiVersion: v1
+kind: Service
+metadata:
+    name: svc-nginx
+spec:
+    ports:
+    - protocol: TCP 
+      port: 80
+      targetPort: 80
+    selector:
+        app: nginx-test
+    sessionAffinity: ClientIP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ing-nginx
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+spec:
+  tls:
+    - secretName: secret-gwbc10
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: svc-nginx
+            port:
+              number: 80
